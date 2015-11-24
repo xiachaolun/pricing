@@ -1,0 +1,15 @@
+*.log
+.idea/
+scopes/
+logs/
+log.txt
+private_config.py
+*.png
+*.pyc
+facebook/model/pyFM/
+my_FM_binary
+basic_fm
+.DS_Store
+*.in
+*.out
+*.zip
