@@ -72,7 +72,7 @@ vector<pair<int, int> > generateRandomRequests(const vector<vector<int> >& segme
     random_device rd;
     mt19937 g(rd());
     shuffle(index_list.begin(), index_list.end(), g);
-    index_list = vector<int> (index_list.begin(), index_list.begin() + 11);
+    index_list = vector<int> (index_list.begin(), index_list.begin() + 12);
     
     vector<pair<int, int> > request_list(0);
     for (const auto& idx : index_list) {
