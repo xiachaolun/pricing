@@ -169,8 +169,8 @@ int main() {
         min2 = greedy2 < min2 ? greedy2 : min2;
         min3 = greedy3 < min3 ? greedy3 : min3;
         count += 1;
-        if (count % 10 == 0) {
-            printf("%.2lf, %.2lf, %.2lf\n", min1, min2, min3);
+        if (count % 50 == 0) {
+            printf("%.3lf, %.3lf, %.3lf\n", min1, min2, min3);
         }
         //printf("%.2lf, %.2lf, %.2lf\n", greedy/(optimal+1e-10), greedy2/(optimal+1e-10), greedy3/(optimal+1e-10));
     }
