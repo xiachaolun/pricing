@@ -34,6 +34,7 @@ set<int> generateIndex() {
     segment_index.clear();
     
     int a = rand()%3, b = rand()%3, c = rand()%4;
+    // if a user has multiple labels, he will be in multiple user segments
     segment_index.insert(getSegmentIndex(a,b,c));
     segment_index.insert(getSegmentIndex(a,b,0));
     segment_index.insert(getSegmentIndex(a,0,c));
@@ -65,6 +66,9 @@ vector<vector<int> > generateRandomAssigment() {
 }
 
 vector<pair<int, int> > generateRandomRequests(const vector<vector<int> >& segment_to_user) {
+    // output: a vector of pairs, each of which is <idx, number>
+    // idx, an integer, indicates the user segment id, 0 <= idx < N
+    // number: the number of users (in the segment idx) requested, 1<= number <= segment_to_user[idx]
     vector<int> index_list(0);
     for (int i = 0; i < N; i++) {
         index_list.push_back(i);
@@ -72,7 +76,9 @@ vector<pair<int, int> > generateRandomRequests(const vector<vector<int> >& segme
     random_device rd;
     mt19937 g(rd());
     shuffle(index_list.begin(), index_list.end(), g);
-    index_list = vector<int> (index_list.begin(), index_list.begin() + 9);
+    // generating n requests, each of which has a distinct segment id.
+    int n = 10;
+    index_list = vector<int> (index_list.begin(), index_list.begin() + n);
     
     vector<pair<int, int> > request_list(0);
     for (const auto& idx : index_list) {
