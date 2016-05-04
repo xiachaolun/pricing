@@ -130,7 +130,7 @@ struct NetworkData {
         for (int i = 0; i < N; ++i) {
             int l = i < L? i : rand() % L; // make sure every label has one buyer
             int d = rand() % D + 1;
-            cout << d << endl;
+            //cout << d << endl;
             int v = rand() % MAX_VALUATION + 1;       // we assume v is [1, 100]
             requests.push_back(Request(l, d, v));
         }
