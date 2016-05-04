@@ -10,6 +10,7 @@
 #include <string>
 #include <map>
 #include <time.h>
+#include <cstring>
 
 using namespace std;
 

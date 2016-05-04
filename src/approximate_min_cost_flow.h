@@ -29,6 +29,7 @@
 #include <set>
 #include <assert.h>
 #include <time.h>
+#include <cstring>
 
 using namespace std;
 
