@@ -52,7 +52,7 @@ struct NetworkData {
     
     void _setLargeData() {
         N = 1000;
-        M = 10000;
+        M = 100000;
         L = MAX_LABEL;
         D = M * 2 / N;
     }
