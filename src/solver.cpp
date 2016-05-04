@@ -57,7 +57,7 @@ struct ProblemSolver {
          So p_i is valid iff for any k, p_i>=p_k*af[i][k] and for any k, p_k>=p_i*af[k][i]
          */
         
-        memset(af, sizeof(af), 0);
+        memset(af, 0, sizeof(af));
         vector<vector<int> > label_user_list(0);
         for (int i = 0; i < L; ++i) {
             label_user_list.push_back(vector<int> (0));
