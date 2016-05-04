@@ -22,8 +22,13 @@
 
 using namespace std;
 
+
 typedef tuple<int, int, int> Request;
 typedef vector<int> User;
+
+const int MAX_USER = 500000;
+const int MAX_BUYER = 1000;
+const int MAX_LABEL = 500;
 
 struct NetworkData {
     int N; // number of buyers
@@ -38,12 +43,24 @@ struct NetworkData {
     
     void init() {
         srand(time(NULL));
-        N = 100;
-        M = 1000;
-        L = 20;
-        D = 20;
+        _setLargeData();
+        assert(N>=L);
         _generateRequests();
         _generateUsers();
+    }
+    
+    void _setLargeData() {
+        N = 50;
+        M = 500;
+        L = 30;
+        D = 20;
+    }
+    
+    void _setSmallData() {
+        N = 10;
+        M = 50;
+        L = 5;
+        D = 10;
     }
     
     void loadFromFile(string file_name) {
@@ -76,7 +93,7 @@ struct NetworkData {
     void _generateRequests() {
         requests.clear();
         for (int i = 0; i < N; ++i) {
-            int l = rand() % L;
+            int l = i < L? i : rand() % L; // make sure every label has one buyer
             int d = rand() % D + 1;
             int v = rand() % 100+1;       // we assume v is [1, 100]
             requests.push_back(Request(l, d, v));
