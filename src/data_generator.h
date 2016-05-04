@@ -36,6 +36,8 @@ struct NetworkData {
     int M; // number of users
     int L; // number of labels
     int D; // number of max demand
+    int L_user; // number of labels one user can have at most
+    string prefix;
     vector<Request> requests;
     vector<User> users;
     
@@ -55,19 +57,25 @@ struct NetworkData {
         M = 100000;
         L = MAX_LABEL;
         D = M * 2 / N;
+        L_user = 20;
+        prefix = "L";
     }
     void _setMediumData() {
         N = 100;
         M = 1000;
         L = 30;
-        D = M*2/N;
+        D = M*4/N;
+        L_user = 10;
+        prefix = "M";
     }
     
     void _setSmallData() {
         N = 10;
         M = 50;
         L = 5;
-        D = 10;
+        D = 20;
+        L_user = 4;
+        prefix = "S";
     }
     
     void loadFromFile(string file_name) {
@@ -97,8 +105,24 @@ struct NetworkData {
         fin.close();
     }
     
-    void saveToFile(string file_name) {
-        
+    void saveToFile() {
+        string file_name = "data/" + prefix + "_" + "0_revenue";
+        ofstream fout(file_name);
+        fout << M << " " << N << " " << L;
+        for (const auto& request : requests) {
+            int l = get<0>(request);
+            int d = get<1>(request);
+            int v = get<2>(request);
+            fout << l << " " << d << " " << v << endl;
+        }
+        for (const auto& user : users) {
+            fout << user.size();
+            for (const auto& l : user) {
+                fout << " " << l;
+            }
+            fout << endl;
+        }
+        fout.close();
     }
     
     void _generateRequests() {
@@ -106,6 +130,7 @@ struct NetworkData {
         for (int i = 0; i < N; ++i) {
             int l = i < L? i : rand() % L; // make sure every label has one buyer
             int d = rand() % D + 1;
+            cout << d << endl;
             int v = rand() % MAX_VALUATION + 1;       // we assume v is [1, 100]
             requests.push_back(Request(l, d, v));
         }
@@ -113,22 +138,21 @@ struct NetworkData {
     
     void _generateUsers() {
         users.clear();
+        vector<int> labels;
+        
+        // start from 1
+        for (int l = 1; l < L; ++l) {
+            labels.push_back(l);
+        }
         for (int i = 0; i < M; ++i) {
             vector<int> user(0);
             assert(user.size() == 0);
             user.push_back(0); // make sure every user has label 0
-            for (int l = 1; l < L - 2; ++l) {
-                if (rand() % 10 < 3) {
-                    user.push_back(l);
-                }
-            }
-            if (user.back() == L - 3) {
-                int c = rand() % 10;
-                if (c < 3) {
-                    user.push_back(L-1);
-                } else if (c < 6) {
-                    user.push_back(L-2);
-                }
+            int n_l = rand() % L_user + 1;
+            random_shuffle(labels.begin(), labels.end());
+            // label 0 is already inserted
+            for (int i = 0; i < n_l - 1; ++i) {
+                user.push_back(labels[i]);
             }
             users.push_back(user);
         }
