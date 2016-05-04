@@ -46,6 +46,9 @@ bool compareSelectedUser(const pair<int,int>& p1, const pair<int,int>& p2) {
     return p1.second < p2.second;
 }
 
+
+//the notation in this file is slightly inconsistent with those in other files.
+
 struct ApproximateAlgorithm {
     vector<User> users;
     vector<Request> requests;
@@ -103,10 +106,10 @@ struct ApproximateAlgorithm {
     }
     
     int computeRevenue() {
-        int r2 = _computeRevenueWithLeastLabels();
         int r1 = _computeRevenueWithLeastPrice();
+        int r2 = _computeRevenueWithLeastLabels();
         int r3 = 0;
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             int r = _computeRevenueWithRandomSelection();
             r3 = max(r3, r);
         }

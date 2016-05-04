@@ -91,7 +91,7 @@ struct ProblemSolver {
     void debug() {
         vector<int> pricing(0);
         for (int i = 0; i < L; ++i) {
-            pricing.push_back(rand()%100+1);
+            pricing.push_back(rand()%MAX_VALUATION+1);
         }
         bool is_uniform = _isUniform(pricing);
         if (is_uniform) {
@@ -171,7 +171,7 @@ struct ProblemSolver {
                     if (v == pricing[l] || v < bounds[l].first || v > bounds[l].second) continue;
                     vector<int> new_pricing = best_pricing; // this could be optimized later
                     new_pricing[l] = v;
-                    int new_revenue = use_random ? _getRevenueForNonuniformPricing(new_pricing) : _getRevenueForNonuniformPricing(new_pricing);
+                    int new_revenue = use_random ? _getApproximateRevenueForNonuniformPricing(new_pricing) : _getRevenueForNonuniformPricing(new_pricing);
                     if (new_revenue > best_new_revenue) {
                         best_l = l;
                         best_v = v;
@@ -193,6 +193,57 @@ struct ProblemSolver {
         return make_pair(best_revenue, best_pricing);
     }
     
+    pair<int, vector<int> > findLocallyOptimalNonuiformPricing2(bool use_random=0) {
+        vector<set<int> > valuations(0);
+        for (int i = 0; i < L; ++i) {
+            valuations.push_back(set<int> ());
+        }
+        for (const auto& request : requests) {
+            int l = get<0>(request);
+            int v = get<2>(request);
+            valuations[l].insert(v);
+        }
+        
+        pair<int, int> r = findOptimalUniformPrice();
+        cout << "revenue : " << r.first << " with uniform price: " << r.second << endl;
+        int revenue = r.first; // current_revenue;
+        vector<int> pricing(0); // current_pricing
+        for (int l = 0; l < L; ++l) {
+            pricing.push_back(r.second);
+        }
+        bool changed = true;
+        while (changed ) {
+            changed = false;
+            vector<pair<double, double> > bounds(0);
+            for (int l = 0; l < L; ++l) {
+                bounds.push_back(_computePriceLowerAndUpperBound(l, pricing));
+            }
+            for (int l = 0; l < L; ++l) {
+                vector<int> prcing_l = pricing;
+                for (set<int>::iterator it = valuations[l].begin(); it != valuations[l].end(); it++) {
+                    int v = *it;
+                    if (v == pricing[l] || v < bounds[l].first || v > bounds[l].second) continue;
+                    prcing_l = pricing;
+                    prcing_l[l] = v;
+                    int new_revenue = use_random ? _getApproximateRevenueForNonuniformPricing(prcing_l) : _getRevenueForNonuniformPricing(prcing_l);
+                    if (new_revenue > revenue) {
+                        revenue = new_revenue;
+                        changed = true;
+                        pricing[l] = v;
+                    }
+                }
+            }
+            if (changed) {
+                cout << "revenue : " << revenue << " with prices:";
+                for (int l = 0; l < L; l++) {
+                    cout << " " << pricing[l];
+                }
+                cout << endl;
+            }
+        }
+        return make_pair(revenue, pricing);
+    }
+    
     int _getRevenueForNonuniformPricing(const vector<int>& pricing) {
         MinCostMaxFlow g(M + N + 2);
         for (int i = 0; i < M; ++i) {
@@ -206,13 +257,13 @@ struct ProblemSolver {
             int d = get<1>(requests[i]);
             int v = get<2>(requests[i]);
             if (v >= pricing[l]) {
-                g.AddEdge(i+M, t, d, 100 - pricing[l]);
+                g.AddEdge(i+M, t, d, MAX_VALUATION - pricing[l]);
             }
         }
         pair<int, int> r = g.GetMaxFlow(s,t);
         int flow = r.first;
         int cost = r.second;
-        return 100*flow - cost;
+        return MAX_VALUATION*flow - cost;
     }
     
     int _getApproximateRevenueForNonuniformPricing(const vector<int>& pricing) {
@@ -221,13 +272,13 @@ struct ProblemSolver {
     }
     
     pair<double, double> _computePriceLowerAndUpperBound(int l, const vector<int>& pricing) {
-        double lower = 0;
-        double upper = 100;
+        double lower = 1;
+        double upper = MAX_VALUATION;
         for (int i = 0; i < L; ++i) {
             if (i == l) continue;
             lower = max(af[l][i]*pricing[i], lower);
             if (af[i][l] > 1e-8) {
-                upper = max(pricing[i]/af[i][l], upper);
+                upper = min(pricing[i]/af[i][l], upper);
             }
         }
         return make_pair(lower, upper);
@@ -240,7 +291,10 @@ int main() {
     data.init();
 //    data.loadFromFile("data/data_2.txt");
     ProblemSolver ps(data);
-    cout << ps.findOptimalUniformPrice().first << endl;
-    cout << ps.findLocallyOptimalNonuiformPricing(1).first << endl;
+    int uni_r = ps.findOptimalUniformPrice().first;
+    int nonuni_r = ps.findLocallyOptimalNonuiformPricing2(1).first;
+    cout << (nonuni_r - uni_r)*1.0 / uni_r << endl;
+//    cout << ps.findOptimalUniformPrice().first << endl;
+//    cout << ps.findLocallyOptimalNonuiformPricing2(1).first << endl;
 //    ps.debug();
 }
