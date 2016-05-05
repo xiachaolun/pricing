@@ -54,7 +54,7 @@ struct NetworkData {
     
     void _setLargeData() {
         N = 1000;
-        M = 100000;
+        M = 500000;
         L = MAX_LABEL;
         D = M * 2 / N;
         L_user = 20;
