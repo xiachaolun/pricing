@@ -89,10 +89,10 @@ struct NetworkData {
     }
     
     void _setTinyData() {
-        N = 20;
-        M = 100;
+        N = 50;
+        M = 500;
         L = 10;
-        D = 20;
+        D = 50;
         L_user = 4;
     }
     
