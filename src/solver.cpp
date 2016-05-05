@@ -281,7 +281,7 @@ int main(int argc, char* argv[]) {
     int L_user = atoi(argv[4]);
     cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << endl;
     srand(time(NULL));
-    for (int i = 0; i < 10000; ++i) {
+    while (true) {
         NetworkData data;
         data.init(N,M,L,L_user);
 //    data.loadFromFile("data/data_2.txt");
