@@ -44,56 +44,16 @@ struct NetworkData {
     NetworkData () {
     }
     
-    void init(string size) {
+    void init(int N, int M, int L, int L_user) {
         srand(time(NULL));
-        if (size == "large") {
-            _setLargeData();
-        } else if (size == "medium") {
-            _setMediumData();
-        } else if (size == "small") {
-            _setSmallData();
-        } else if (size == "tiny") {
-            _setTinyData();
-        } else {
-            assert(false);
-        }
+        this->N = N;
+        this->M = M;
+        this->L = L;
+        this->L_user = L_user;
+        D = M * 4 / N;
         assert(N>=L);
         _generateRequests();
         _generateUsers();
-    }
-    
-    void _setLargeData() {
-        N = 1000;
-        M = 500000;
-        L = MAX_LABEL;
-        D = M * 2 / N;
-        L_user = 20;
-        prefix = "L";
-    }
-    void _setMediumData() {
-        N = 100;
-        M = 1000;
-        L = 30;
-        D = M*4/N;
-        L_user = 10;
-        prefix = "M";
-    }
-    
-    void _setSmallData() {
-        N = 10;
-        M = 50;
-        L = 5;
-        D = 20;
-        L_user = 4;
-        prefix = "S";
-    }
-    
-    void _setTinyData() {
-        N = 50;
-        M = 500;
-        L = 10;
-        D = 50;
-        L_user = 4;
     }
     
     void loadFromFile(string file_name) {

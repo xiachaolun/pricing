@@ -273,7 +273,13 @@ struct ProblemSolver {
     }
 };
 
-int main() {
+int main(int argc, char* argv[]) {
+    assert(argc == 5);
+    int N = atoi(argv[1]);
+    int M = atoi(argv[2]);
+    int L = atoi(argv[3]);
+    int L_user = atoi(argv[4]);
+    cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << endl;
     srand(time(NULL));
     for (int i = 0; i < 10000; ++i) {
         NetworkData data;
