@@ -283,7 +283,7 @@ int main(int argc, char* argv[]) {
     srand(time(NULL));
     for (int i = 0; i < 10000; ++i) {
         NetworkData data;
-        data.init("tiny");
+        data.init(N,M,L,L_user);
 //    data.loadFromFile("data/data_2.txt");
         ProblemSolver ps(data);
         int uni_r = ps.findOptimalUniformPrice().first;
