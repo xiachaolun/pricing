@@ -288,8 +288,9 @@ int main(int argc, char* argv[]) {
         ProblemSolver ps(data);
         int uni_r = ps.findOptimalUniformPrice().first;
         int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
-        int opt_r = ps.findOptimalPricingByDFS().first;
-        cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
+//        int opt_r = ps.findOptimalPricingByDFS().first;
+//        cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
+        cout << uni_r << " " << nonuni_r << endl;
     }
 //    cout << (nonuni_r - uni_r)*1.0 / uni_r << endl;
     
