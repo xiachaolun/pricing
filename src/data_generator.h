@@ -29,7 +29,7 @@ typedef vector<int> User;
 const int MAX_USER = 500000;
 const int MAX_BUYER = 1000;
 const int MAX_LABEL = 500;
-const int MAX_VALUATION = 10;
+const int MAX_VALUATION = 5;
 
 struct NetworkData {
     int N; // number of buyers
@@ -44,9 +44,19 @@ struct NetworkData {
     NetworkData () {
     }
     
-    void init() {
+    void init(string size) {
         srand(time(NULL));
-        _setLargeData();
+        if (size == "large") {
+            _setLargeData();
+        } else if (size == "medium") {
+            _setMediumData();
+        } else if (size == "small") {
+            _setSmallData();
+        } else if (size == "tiny") {
+            _setTinyData();
+        } else {
+            assert(false);
+        }
         assert(N>=L);
         _generateRequests();
         _generateUsers();
@@ -76,6 +86,14 @@ struct NetworkData {
         D = 20;
         L_user = 4;
         prefix = "S";
+    }
+    
+    void _setTinyData() {
+        N = 20;
+        M = 100;
+        L = 10;
+        D = 20;
+        L_user = 4;
     }
     
     void loadFromFile(string file_name) {
