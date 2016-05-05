@@ -144,6 +144,9 @@ struct ProblemSolver {
             pricing.push_back(r.second);
         }
         bool changed = true;
+        
+        cout << revenue;
+        
         while (changed ) {
             changed = false;
             vector<pair<double, double> > bounds(0);
@@ -162,6 +165,7 @@ struct ProblemSolver {
                         revenue = new_revenue;
                         changed = true;
                         pricing[l] = v;
+                        cout << " " << new_revenue;
                     }
                 }
             }
@@ -173,6 +177,7 @@ struct ProblemSolver {
 //                cout << endl;
 //            }
         }
+        cout << endl;
         return make_pair(revenue, pricing);
     }
     
@@ -290,7 +295,7 @@ int main(int argc, char* argv[]) {
         int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
 //        int opt_r = ps.findOptimalPricingByDFS().first;
 //        cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
-        cout << uni_r << " " << nonuni_r << endl;
+//        cout << uni_r << " " << nonuni_r << endl;
     }
 //    cout << (nonuni_r - uni_r)*1.0 / uni_r << endl;
     
