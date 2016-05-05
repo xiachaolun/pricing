@@ -27,7 +27,7 @@ typedef tuple<int, int, int> Request;
 typedef vector<int> User;
 
 const int MAX_USER = 1000000;
-const int MAX_BUYER = 1000;
+const int MAX_BUYER = 2000;
 const int MAX_LABEL = 500;
 const int MAX_VALUATION = 10000;
 
