@@ -125,7 +125,7 @@ struct ProblemSolver {
         return make_pair(best_revenue, best_price);
     }
 
-    pair<int, vector<int> > findLocallyOptimalNonuiformPricing(bool use_random=0) {
+    pair<int, vector<int> > findLocallyOptimalNonuiformPricing(bool use_random=0, bool include_detail=1) {
         vector<set<int> > valuations(0);
         for (int i = 0; i < L; ++i) {
             valuations.push_back(set<int> ());
@@ -146,7 +146,7 @@ struct ProblemSolver {
         bool changed = true;
         
         int round = 0;
-        cout << round << ":" << revenue;
+        if (include_detail) cout << round << ":" << revenue;
         
         while (changed ) {
             round++;
@@ -167,12 +167,12 @@ struct ProblemSolver {
                         revenue = new_revenue;
                         changed = true;
                         pricing[l] = v;
-                        cout << " " << round << ":" << new_revenue;
+                        if (include_detail) cout << " " << round << ":" << new_revenue;
                     }
                 }
             }
         }
-        cout << endl;
+        if (include_detail) cout << endl;
         return make_pair(revenue, pricing);
     }
     
@@ -281,27 +281,25 @@ int main(int argc, char* argv[]) {
     int L_user = atoi(argv[4]);
     cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << " Max Valution:" << MAX_VALUATION << endl;
 
-    int n_cases = 1;
+//    int n_cases = 1;
+//    while (true) {
+//        cout << "case: " << n_cases++ << endl;
+//        srand(unsigned(time(0)));
+//        NetworkData data;
+//        data.init(N,M,L,L_user);
+//        ProblemSolver ps(data);
+//        int uni_r = ps.findOptimalUniformPrice().first;
+//        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
+//    }
+    
+    
     while (true) {
-        cout << "case: " << n_cases++ << endl;
-        srand(unsigned(time(0)));
         NetworkData data;
         data.init(N,M,L,L_user);
         ProblemSolver ps(data);
         int uni_r = ps.findOptimalUniformPrice().first;
-        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
-    }
-    
-    
-    /*
-    while (true) {
-        NetworkData data;
-        data.init(N,M,L,L_user);
-        ProblemSolver ps(data);
-        int uni_r = ps.findOptimalUniformPrice().first;
-        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
+        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1, 0).first;
         int opt_r = ps.findOptimalPricingByDFS().first;
         cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
     }
-    */
 }

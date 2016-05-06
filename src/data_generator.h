@@ -26,10 +26,15 @@ using namespace std;
 typedef tuple<int, int, int> Request;
 typedef vector<int> User;
 
-const int MAX_USER = 500000;
-const int MAX_BUYER = 1000;
-const int MAX_LABEL = 500;
-const int MAX_VALUATION = 1000;
+//const int MAX_USER = 500000;
+//const int MAX_BUYER = 1000;
+//const int MAX_LABEL = 500;
+//const int MAX_VALUATION = 1000;
+
+const int MAX_USER = 200;
+const int MAX_BUYER = 50;
+const int MAX_LABEL = 10;
+const int MAX_VALUATION = 5;
 
 struct NetworkData {
     int N; // number of buyers
