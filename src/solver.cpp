@@ -145,9 +145,11 @@ struct ProblemSolver {
         }
         bool changed = true;
         
-        cout << revenue;
+        int round = 0;
+        cout << round << ":" << revenue;
         
         while (changed ) {
+            round++;
             changed = false;
             vector<pair<double, double> > bounds(0);
             for (int l = 0; l < L; ++l) {
@@ -165,7 +167,7 @@ struct ProblemSolver {
                         revenue = new_revenue;
                         changed = true;
                         pricing[l] = v;
-                        cout << " " << new_revenue;
+                        cout << " " << round << ":" << new_revenue;
                     }
                 }
             }
