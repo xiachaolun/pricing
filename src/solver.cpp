@@ -281,7 +281,7 @@ int main(int argc, char* argv[]) {
 
     int n_cases = 1;
     while (true) {
-        cout << "case: " << cases++ << endl;
+        cout << "case: " << n_cases++ << endl;
         srand(unsigned(time(0)));
         NetworkData data;
         data.init(N,M,L,L_user);
