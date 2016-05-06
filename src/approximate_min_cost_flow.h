@@ -30,7 +30,6 @@
 #include <assert.h>
 #include <time.h>
 #include <cstring>
-#include <bitset>
 
 using namespace std;
 
@@ -59,11 +58,8 @@ struct ApproximateAlgorithm {
     int M; // number of requests;
     int L; // number of labels;
     vector<vector<int> > label_user_list;
-//    bool used_users[MAX_USER];
-//    bool satisfiable_labels[MAX_BUYER][MAX_LABEL]; //satisfiable_labels[i][j] denote after i-th buyer (included), whether any label will be used.
-    
-    bitset<MAX_USER> used_users;
-    bitset<MAX_BUYER> satisfiable_labels[MAX_LABEL];
+    bool used_users[MAX_USER];
+    bool satisfiable_labels[MAX_BUYER][MAX_LABEL]; //satisfiable_labels[i][j] denote after i-th buyer (included), whether any label will be used.
     
     ApproximateAlgorithm(const vector<User>& users, const vector<Request>& requests, const vector<int>& pricing) {
         setParameters(users, requests, pricing);
@@ -98,10 +94,10 @@ struct ApproximateAlgorithm {
         
         sort(requests.begin(), requests.end(), compareRequest);
         
-//        memset(used_users, 0, sizeof(bool) * N);
+        memset(used_users, 0, sizeof(bool) * N);
         
         for (int i = 0; i < M; ++i) {
-//            memset(satisfiable_labels[i], 0, sizeof(bool) * L);
+            memset(satisfiable_labels[i], 0, sizeof(bool) * L);
             for (int j = i; j < M; ++j) {
                 int l = get<0>(requests[j]);
                 satisfiable_labels[i][l] = 1;
