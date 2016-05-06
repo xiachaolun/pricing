@@ -26,7 +26,7 @@ using namespace std;
 typedef tuple<unsigned short, unsigned short, unsigned short> Request;
 typedef vector<unsigned short> User;
 
-const int MAX_USER = 500000;
+const int MAX_USER = 1000000;
 const int MAX_BUYER = 1000;
 const int MAX_LABEL = 500;
 const int MAX_VALUATION = 1000;
