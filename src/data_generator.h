@@ -23,18 +23,18 @@
 using namespace std;
 
 
-typedef tuple<int, int, int> Request;
-typedef vector<int> User;
+typedef tuple<unsigned short, unsigned short, unsigned short> Request;
+typedef vector<unsigned short> User;
 
-//const int MAX_USER = 500000;
-//const int MAX_BUYER = 1000;
-//const int MAX_LABEL = 500;
-//const int MAX_VALUATION = 1000;
+const int MAX_USER = 500000;
+const int MAX_BUYER = 1000;
+const int MAX_LABEL = 500;
+const int MAX_VALUATION = 1000;
 
-const int MAX_USER = 200;
-const int MAX_BUYER = 50;
-const int MAX_LABEL = 10;
-const int MAX_VALUATION = 5;
+//const int MAX_USER = 200;
+//const int MAX_BUYER = 50;
+//const int MAX_LABEL = 10;
+//const int MAX_VALUATION = 5;
 
 struct NetworkData {
     int N; // number of buyers
@@ -121,14 +121,14 @@ struct NetworkData {
     
     void _generateUsers() {
         users.clear();
-        vector<int> labels;
+        vector<unsigned short> labels;
         
         // start from 1
         for (int l = 1; l < L; ++l) {
             labels.push_back(l);
         }
         for (int i = 0; i < M; ++i) {
-            vector<int> user(0);
+            vector<unsigned short> user(0);
             assert(user.size() == 0);
             user.push_back(0); // make sure every user has label 0
             int n_l = rand() % L_user + 1;
