@@ -59,7 +59,7 @@ struct ApproximateAlgorithm {
     int L; // number of labels;
     vector<vector<int> > label_user_list;
     bool used_users[MAX_USER];
-    bool satisfiable_labels[MAX_BUYER][MAX_LABEL];
+    bool satisfiable_labels[MAX_BUYER][MAX_LABEL]; //satisfiable_labels[i][j] denote after i-th buyer (included), whether any label will be used.
     
     ApproximateAlgorithm(const vector<User>& users, const vector<Request>& requests, const vector<int>& pricing) {
         setParameters(users, requests, pricing);
@@ -100,7 +100,7 @@ struct ApproximateAlgorithm {
             memset(satisfiable_labels[i], 0, sizeof(bool) * L);
             for (int j = i; j < M; ++j) {
                 int l = get<0>(requests[j]);
-                satisfiable_labels[i][j] = 1;
+                satisfiable_labels[i][l] = 1;
             }
         }
         

@@ -145,7 +145,7 @@ struct ProblemSolver {
         }
         bool changed = true;
         
-        cout << revenue;
+//        cout << revenue;
         
         while (changed ) {
             changed = false;
@@ -165,7 +165,7 @@ struct ProblemSolver {
                         revenue = new_revenue;
                         changed = true;
                         pricing[l] = v;
-                        cout << " " << new_revenue;
+//                        cout << " " << new_revenue;
                     }
                 }
             }
@@ -177,7 +177,7 @@ struct ProblemSolver {
 //                cout << endl;
 //            }
         }
-        cout << endl;
+//        cout << endl;
         return make_pair(revenue, pricing);
     }
     
@@ -284,79 +284,27 @@ int main(int argc, char* argv[]) {
     int M = atoi(argv[2]);
     int L = atoi(argv[3]);
     int L_user = atoi(argv[4]);
-    cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << endl;
     srand(time(NULL));
+    
+    
+    /*
+    cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << endl;
     while (true) {
         NetworkData data;
         data.init(N,M,L,L_user);
-//    data.loadFromFile("data/data_2.txt");
         ProblemSolver ps(data);
         int uni_r = ps.findOptimalUniformPrice().first;
         int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
-//        int opt_r = ps.findOptimalPricingByDFS().first;
-//        cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
-//        cout << uni_r << " " << nonuni_r << endl;
     }
-//    cout << (nonuni_r - uni_r)*1.0 / uni_r << endl;
+    */
     
-//    cout << ps.findOptimalUniformPrice().first << endl;
-//    cout << ps.findLocallyOptimalNonuiformPricing2(1).first << endl;
-//    ps.debug();
+    while (true) {
+        NetworkData data;
+        data.init(N,M,L,L_user);
+        ProblemSolver ps(data);
+        int uni_r = ps.findOptimalUniformPrice().first;
+        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
+        int opt_r = ps.findOptimalPricingByDFS().first;
+        cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
+    }
 }
-
-    /*
-     pair<int, vector<int> > findLocallyOptimalNonuiformPricing(bool use_random=0) {
-     vector<set<int> > valuations(0);
-     for (int i = 0; i < L; ++i) {
-     valuations.push_back(set<int> ());
-     }
-     for (const auto& request : requests) {
-     int l = get<0>(request);
-     int v = get<2>(request);
-     valuations[l].insert(v);
-     }
-     
-     pair<int, int> r = findOptimalUniformPrice();
-     cout << "revenue : " << r.first << " with uniform price: " << r.second << endl;
-     int best_revenue = r.first;
-     vector<int> pricing(0);
-     for (int l = 0; l < L; ++l) {
-     pricing.push_back(r.second);
-     }
-     vector<int> best_pricing = pricing;
-     bool changed = true;
-     while (changed ) {
-     changed = false;
-     vector<pair<double, double> > bounds(0);
-     for (int l = 0; l < L; ++l) {
-     bounds.push_back(_computePriceLowerAndUpperBound(l, pricing));
-     }
-     int best_l = -1, best_v = -1, best_new_revenue = best_revenue;
-     for (int l = 0; l < L; ++l) {
-     for (set<int>::iterator it = valuations[l].begin(); it != valuations[l].end(); it++) {
-     int v = *it;
-     if (v == pricing[l] || v < bounds[l].first || v > bounds[l].second) continue;
-     vector<int> new_pricing = best_pricing; // this could be optimized later
-     new_pricing[l] = v;
-     int new_revenue = use_random ? _getApproximateRevenueForNonuniformPricing(new_pricing) : _getRevenueForNonuniformPricing(new_pricing);
-     if (new_revenue > best_new_revenue) {
-     best_l = l;
-     best_v = v;
-     best_new_revenue = new_revenue;
-     }
-     }
-     }
-     if (best_l != -1) {
-     changed = true;
-     best_pricing[best_l] = best_v;
-     best_revenue = best_new_revenue;
-     cout << "revenue : " << best_revenue << " with prices:";
-     for (int l = 0; l < L; l++) {
-     cout << " " << best_pricing[l];
-     }
-     cout << endl;
-     }
-     }
-     return make_pair(best_revenue, best_pricing);
-     }
-     */
