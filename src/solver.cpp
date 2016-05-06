@@ -279,7 +279,9 @@ int main(int argc, char* argv[]) {
     int L_user = atoi(argv[4]);
     cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << " Max Valution:" << MAX_VALUATION << endl;
 
+    int n_cases = 1;
     while (true) {
+        cout << "case: " << cases++ << endl;
         srand(unsigned(time(0)));
         NetworkData data;
         data.init(N,M,L,L_user);
