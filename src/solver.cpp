@@ -277,10 +277,10 @@ int main(int argc, char* argv[]) {
     int M = atoi(argv[2]);
     int L = atoi(argv[3]);
     int L_user = atoi(argv[4]);
-    srand(time(NULL));
     cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << " Max Valution:" << MAX_VALUATION << endl;
 
     while (true) {
+        srand(unsigned(time(0)));
         NetworkData data;
         data.init(N,M,L,L_user);
         ProblemSolver ps(data);

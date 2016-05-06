@@ -45,7 +45,7 @@ struct NetworkData {
     }
     
     void init(int N, int M, int L, int L_user) {
-        srand(time(NULL));
+        srand(unsigned(time(0)));
         this->N = N;
         this->M = M;
         this->L = L;

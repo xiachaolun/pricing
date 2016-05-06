@@ -68,6 +68,7 @@ struct ApproximateAlgorithm {
     ApproximateAlgorithm() {}
     
     void setParameters(const vector<User>& users, const vector<Request>& requests, const vector<int>& pricing) {
+        srand(unsigned(time(0)));
         this->users = users;
         this->requests = requests;
         this->pricing = pricing;
