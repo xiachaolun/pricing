@@ -145,7 +145,7 @@ struct ProblemSolver {
         }
         bool changed = true;
         
-//        cout << revenue;
+        cout << revenue;
         
         while (changed ) {
             changed = false;
@@ -165,19 +165,12 @@ struct ProblemSolver {
                         revenue = new_revenue;
                         changed = true;
                         pricing[l] = v;
-//                        cout << " " << new_revenue;
+                        cout << " " << new_revenue;
                     }
                 }
             }
-//            if (changed) {
-//                cout << "revenue : " << revenue << " with prices:";
-//                for (int l = 0; l < L; l++) {
-//                    cout << " " << pricing[l];
-//                }
-//                cout << endl;
-//            }
         }
-//        cout << endl;
+        cout << endl;
         return make_pair(revenue, pricing);
     }
     
@@ -285,9 +278,8 @@ int main(int argc, char* argv[]) {
     int L = atoi(argv[3]);
     int L_user = atoi(argv[4]);
     srand(time(NULL));
-    cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << "Max Valution:" << MAX_VALUATION << endl;
-    
-    /*
+    cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << " Max Valution:" << MAX_VALUATION << endl;
+
     while (true) {
         NetworkData data;
         data.init(N,M,L,L_user);
@@ -295,9 +287,9 @@ int main(int argc, char* argv[]) {
         int uni_r = ps.findOptimalUniformPrice().first;
         int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
     }
-    */
     
     
+    /*
     while (true) {
         NetworkData data;
         data.init(N,M,L,L_user);
@@ -307,4 +299,5 @@ int main(int argc, char* argv[]) {
         int opt_r = ps.findOptimalPricingByDFS().first;
         cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
     }
+    */
 }
