@@ -22,7 +22,7 @@ struct ProblemSolver {
     int L; // number of labels
     int s, t; //source & sink
     vector<pair<int, int> > edges;
-    double af[MAX_LABEL][MAX_LABEL]; // arbitrage-free matrix
+    float af[MAX_LABEL][MAX_LABEL]; // arbitrage-free matrix
 //    ApproximateAlgorithm aa;
     
     //variable for optimal pricing
@@ -232,9 +232,9 @@ struct ProblemSolver {
         double upper = MAX_VALUATION;
         for (int i = 0; i < L; ++i) {
             if (i == l) continue;
-            lower = max(af[l][i]*pricing[i], lower);
-            if (af[i][l] > 1e-8) {
-                upper = min(pricing[i]/af[i][l], upper);
+            lower = max((double)af[l][i]*pricing[i], lower);
+            if (af[i][l] > 1e-6) {
+                upper = min((double)pricing[i]/af[i][l], upper);
             }
         }
         return make_pair(lower, upper);
