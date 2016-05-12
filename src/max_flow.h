@@ -28,7 +28,7 @@
 
 using namespace std;
 
-typedef long long LL;
+typedef int LL;
 
 struct Edge {
     int from, to, cap, flow, index;
