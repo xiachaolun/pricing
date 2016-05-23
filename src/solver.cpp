@@ -53,7 +53,6 @@ struct ProblemSolver {
         vector<tuple<int, int, int> > edges;
         edges.clear();
         for (int k = 0; k < M; ++k) {
-            edges.push_back(tuple<int, int, int>(0, k, 1));
             for (const auto& l : users[k]) {
                 edges.push_back(tuple<int, int, int>(k, M+l, 1));
             }
