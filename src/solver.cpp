@@ -20,7 +20,7 @@ struct ProblemSolver {
     int N; // number of buyers;
     int M; // number of users;
     int L; // number of labels
-    int s, t; //source & sink
+    int l_size[MAX_LABEL]; // number of users with that label
 //    vector<pair<int, unsigned short> > edges;
     float af[MAX_LABEL][MAX_LABEL]; // arbitrage-free matrix
 //    ApproximateAlgorithm aa;
@@ -35,26 +35,33 @@ struct ProblemSolver {
         N = data.N;
         M = data.M;
         L = data.L;
-        s = N + M;
-        t = N + M + 1;
+        memset(l_size, 0, sizeof(l_size));
+        for (const auto& user : users) {
+            for (const auto& l : user) {
+                l_size[l] += 1;
+            }
+        }
         
         assert(L<=1000);
         
         _computeArbitrageFreeConstraints();
     }
     
-    vector<pair<int, unsigned short> > _genearteEdge() {
-        vector<pair<int, unsigned short> > edges;
+    vector<tuple<int, int, int> > _genearteEdge() {
+        // this process already convert the index as:
+        // user k -> k; user set j -> M+j; advertiser i-> M+L+i
+        vector<tuple<int, int, int> > edges;
         edges.clear();
-        for (int i = 0; i < M; ++i) {
-            for (int j = 0; j < N; ++j) {
-                int l = get<0>(requests[j]);
-                assert(0 <= l);
-                assert(l < L);
-                if (find(users[i].begin(), users[i].end(), l) != users[i].end()) {
-                    edges.push_back(make_pair(i, j));
-                }
+        for (int k = 0; k < M; ++k) {
+            edges.push_back(tuple<int, int, int>(0, k, 1));
+            for (const auto& l : users[k]) {
+                edges.push_back(tuple<int, int, int>(k, M+l, 1));
             }
+        }
+        
+        for (int j = 0; j < N; ++j) {
+            int l = get<0>(requests[j]);
+            edges.push_back(tuple<int, int, int>(M+l, M+L+j, l_size[l]));
         }
         return edges;
     }
@@ -190,20 +197,27 @@ struct ProblemSolver {
     }
     
     int _getRevenueForNonuniformPricing(const vector<int>& pricing) {
-        MinCostMaxFlow g(M + N + 2);
+        MinCostMaxFlow g(M + N + L + 2);
+        int s, t; //source & sink
+        s = N + M + L;
+        t = N + M + L + 1;
         for (int i = 0; i < M; ++i) {
             g.AddEdge(s, i, 1, 0);
         }
-//        for (const auto& e : edges) {
+        
         for (const auto& e : _genearteEdge()) {
-            g.AddEdge(e.first, e.second + M, 1, 0);
+            int from = get<0>(e);
+            int to = get<1>(e);
+            int cap = get<2>(e);
+            g.AddEdge(from, to, cap, 0);
         }
+        
         for (int i = 0; i < N; ++i) {
             int l = get<0>(requests[i]);
             int d = get<1>(requests[i]);
             int v = get<2>(requests[i]);
             if (v >= pricing[l]) {
-                g.AddEdge(i+M, t, d, MAX_VALUATION - pricing[l]);
+                g.AddEdge(i+M+L, t, d, MAX_VALUATION - pricing[l]);
             }
         }
         pair<int, int> r = g.GetMaxFlow(s,t);
@@ -213,20 +227,25 @@ struct ProblemSolver {
     }
     
     int _getRevenueForUniformPricing(int price) {
-        PushRelabel g(M+N+2);
+        PushRelabel g(M+N+L+2);
+        int s, t; //source & sink
+        s = N + M + L;
+        t = N + M + L + 1;
         for (int i = 0; i < M; ++i) {
             g.AddEdge(s, i, 1);
         }
         
-//        for (const auto& e : edges) {
         for (const auto& e : _genearteEdge()) {
-            g.AddEdge(e.first, e.second + M, 1);
+            int from = get<0>(e);
+            int to = get<1>(e);
+            int cap = get<2>(e);
+            g.AddEdge(from, to, cap);
         }
         for (int i = 0; i < N; ++i) {
             int d = get<1>(requests[i]);
             int v = get<2>(requests[i]);
             if (v >= price) {
-                g.AddEdge(i+M, t, d);
+                g.AddEdge(i+M+L, t, d);
             }
         }
         return g.GetMaxFlow(s,t) * price;
@@ -281,6 +300,28 @@ struct ProblemSolver {
     }
 };
 
+void runEvaluation(int N, int M, int L, int L_user) {
+    int n_cases = 1;
+    while (true) {
+        cout << "case: " << n_cases++ << endl;
+        srand(unsigned(time(0)));
+        NetworkData data;
+        data.init(N,M,L,L_user);
+        ProblemSolver ps(data);
+        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
+    }
+    
+    //    while (true) {
+    //        NetworkData data;
+    //        data.init(N,M,L,L_user);
+    //        ProblemSolver ps(data);
+    //        int uni_r = ps.findOptimalUniformPrice().first;
+    //        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1, 0).first;
+    //        int opt_r = ps.findOptimalPricingByDFS().first;
+    //        cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
+    //    }
+}
+
 int main(int argc, char* argv[]) {
     assert(argc == 5);
     int N = atoi(argv[1]);
@@ -289,24 +330,5 @@ int main(int argc, char* argv[]) {
     int L_user = atoi(argv[4]);
     cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << " Max Valution:" << MAX_VALUATION << endl;
 
-    int n_cases = 1;
-    while (true) {
-        cout << "case: " << n_cases++ << endl;
-        srand(unsigned(time(0)));
-        NetworkData data;
-        data.init(N,M,L,L_user);
-        ProblemSolver ps(data);
-        int uni_r = ps.findOptimalUniformPrice().first;
-        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
-    }
-    
-//    while (true) {
-//        NetworkData data;
-//        data.init(N,M,L,L_user);
-//        ProblemSolver ps(data);
-//        int uni_r = ps.findOptimalUniformPrice().first;
-//        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1, 0).first;
-//        int opt_r = ps.findOptimalPricingByDFS().first;
-//        cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
-//    }
+    runEvaluation(N,M,L,L_user);
 }
