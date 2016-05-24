@@ -118,12 +118,12 @@ struct ApproximateAlgorithm {
     }
     
     int computeRevenue() {
-        int r1 = _computeRevenueWithLeastPrice();
+//        int r1 = _computeRevenueWithLeastPrice();
         int r2 = _computeRevenueWithLeastLabels();
         int r3 = 0;
         for (int i = 0; i < 10; i++) {
-            int r = _computeRevenueWithRandomSelection();
-            r3 = max(r3, r);
+//            int r = _computeRevenueWithRandomSelection();
+//            r3 = max(r3, r);
         }
 //        if (r1 == max(max(r1,r2), r3)) {
 //            cout << 1 << endl;
@@ -133,7 +133,8 @@ struct ApproximateAlgorithm {
 //            cout << 3 << endl;
 //        }
         
-        return max(max(r1,r2), r3);
+//        return max(max(r1,r2), r3);
+        return r2;
     }
     
     int _computeRevenueWithLeastPrice() {
