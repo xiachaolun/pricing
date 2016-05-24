@@ -37,7 +37,8 @@ void runEvaluation(int N, int M, int L, int L_user) {
 }
 
 void runExperiment2(int N, int M, int L, int L_user) {
-    while (true) {
+    int count = 1000;
+    while (count--) {
         NetworkData data;
         data.init(N,M,L,L_user);
         vector<int> p(0);
