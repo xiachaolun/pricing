@@ -63,12 +63,22 @@ struct ApproximateAlgorithm {
     
     ApproximateAlgorithm(const vector<User>& users, const vector<Request>& requests, const vector<int>& pricing) {
         setParameters(users, requests, pricing);
+        srand(unsigned(time(0)));
+    }
+    
+    ApproximateAlgorithm(const NetworkData& data, const vector<int>& pricing) {
+        users = data.users;
+        requests = data.requests;
+        this->pricing = pricing;
+        N = data.M; //************ not bug!!!!! because of wrong notations
+        M = data.N; //************ not bug!!!!! because of wrong notations
+        L = data.L;
+        srand(unsigned(time(0)));
     }
     
     ApproximateAlgorithm() {}
     
     void setParameters(const vector<User>& users, const vector<Request>& requests, const vector<int>& pricing) {
-        srand(unsigned(time(0)));
         this->users = users;
         this->requests = requests;
         this->pricing = pricing;
@@ -115,6 +125,14 @@ struct ApproximateAlgorithm {
             int r = _computeRevenueWithRandomSelection();
             r3 = max(r3, r);
         }
+//        if (r1 == max(max(r1,r2), r3)) {
+//            cout << 1 << endl;
+//        } else if (r2 == max(max(r1,r2), r3)) {
+//            cout << 2 << endl;
+//        } else if (r3 == max(max(r1,r2), r3)) {
+//            cout << 3 << endl;
+//        }
+        
         return max(max(r1,r2), r3);
     }
     

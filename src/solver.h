@@ -298,36 +298,3 @@ struct ProblemSolver {
         return 1;
     }
 };
-
-void runEvaluation(int N, int M, int L, int L_user) {
-    int n_cases = 1;
-    while (true) {
-        cout << "case: " << n_cases++ << endl;
-        srand(unsigned(time(0)));
-        NetworkData data;
-        data.init(N,M,L,L_user);
-        ProblemSolver ps(data);
-        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1).first;
-    }
-    
-    //    while (true) {
-    //        NetworkData data;
-    //        data.init(N,M,L,L_user);
-    //        ProblemSolver ps(data);
-    //        int uni_r = ps.findOptimalUniformPrice().first;
-    //        int nonuni_r = ps.findLocallyOptimalNonuiformPricing(1, 0).first;
-    //        int opt_r = ps.findOptimalPricingByDFS().first;
-    //        cout << uni_r << " " << nonuni_r << " " << opt_r << endl;
-    //    }
-}
-
-int main(int argc, char* argv[]) {
-    assert(argc == 5);
-    int N = atoi(argv[1]);
-    int M = atoi(argv[2]);
-    int L = atoi(argv[3]);
-    int L_user = atoi(argv[4]);
-    cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << " Max Valution:" << MAX_VALUATION << endl;
-
-    runEvaluation(N,M,L,L_user);
-}
