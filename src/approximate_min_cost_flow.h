@@ -127,15 +127,15 @@ struct ApproximateAlgorithm {
             r3 = max(r3, r);
         }
         if (r1 == max(max(r1,r2), r3)) {
-            cout << 1 << endl;
+//            cout << 1 << endl;
         } else if (r2 == max(max(r1,r2), r3)) {
-            cout << 2 << endl;
+//            cout << 2 << endl;
         } else if (r3 == max(max(r1,r2), r3)) {
-            cout << 3 << endl;
+//            cout << 3 << endl;
         }
         
         return max(max(r1,r2), r3);
-        return r2;
+//        return r2;
     }
     
     int _computeRevenueWithLeastPrice() {
