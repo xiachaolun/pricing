@@ -122,18 +122,18 @@ struct ApproximateAlgorithm {
         int r2 = _computeRevenueWithLeastLabels();
         int r3 = 0;
         for (int i = 0; i < 10; i++) {
-//            int r = _computeRevenueWithRandomSelection();
-//            r3 = max(r3, r);
+            int r = _computeRevenueWithRandomSelection();
+            r3 = max(r3, r);
         }
-//        if (r1 == max(max(r1,r2), r3)) {
-//            cout << 1 << endl;
-//        } else if (r2 == max(max(r1,r2), r3)) {
-//            cout << 2 << endl;
-//        } else if (r3 == max(max(r1,r2), r3)) {
-//            cout << 3 << endl;
-//        }
+        if (r1 == max(max(r1,r2), r3)) {
+            cout << 1 << endl;
+        } else if (r2 == max(max(r1,r2), r3)) {
+            cout << 2 << endl;
+        } else if (r3 == max(max(r1,r2), r3)) {
+            cout << 3 << endl;
+        }
         
-//        return max(max(r1,r2), r3);
+        return max(max(r1,r2), r3);
         return r2;
     }
     
