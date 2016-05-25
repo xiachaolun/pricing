@@ -59,6 +59,21 @@ void runExperiment2(int N, int M, int L, int L_user) {
     }
 }
 
+void runExperiment22(int N, int M, int L, int L_user) {
+    int count = 200;
+    while (count--) {
+        NetworkData data;
+        data.init(N,M,L,L_user);
+        vector<int> p(0);
+        ProblemSolver ps(data);
+        cout << ps.findOptimalUniformPrice().first << " ";
+        pair<int, vector<int> > r1 = ps.findLocallyOptimalNonuiformPricing(0,0);
+        pair<int, vector<int> > r2 = ps.findLocallyOptimalNonuiformPricing(1,0);
+        cout << r1.first << " ";
+        cout << ps._getRevenueForNonuniformPricing(r2.second) << endl;
+    }
+}
+
 int main(int argc, char* argv[]) {
     srand(unsigned(time(0)));
     assert(argc == 5);
@@ -69,5 +84,5 @@ int main(int argc, char* argv[]) {
     cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << " Max Valution:" << MAX_VALUATION << endl;
 
 //    runEvaluation(N,M,L,L_user);
-    runExperiment2(N,M,L,L_user);
+    runExperiment22(N,M,L,L_user);
 }

@@ -1,4 +1,3 @@
-Buyers: 100 Users: 1000 L: 50 L per user: 20 Max Valution:1000
 428243 385388
 307041 304881
 285449 285449

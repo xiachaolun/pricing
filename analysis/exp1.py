@@ -15,9 +15,9 @@ def plotResults(uni_interval, nuni_interval):
     rects2 = ax.bar(ind + width, nuni_interval, width, color='b')
 
     # add some text for labels, title and axes ticks
-    ax.set_xlabel('Revenue Ratio')
-    ax.set_ylabel('Case Proportion')
-    ax.set_title('Optimality Gap')
+    ax.set_xlabel('Revenue Ratio', fontsize=18)
+    ax.set_ylabel('Case Proportion', fontsize=18)
+    # ax.set_title('Optimality Gap')
     ax.set_xticks(ind + width)
     ax.set_xticklabels(('(0,0.75]', '(0.75,0.8]', '(0.8,0.85]',
                         '(0.85,0.9]', '(0.9,0.95]', '(0.95,1]'))
@@ -53,6 +53,6 @@ def analysis():
     return uni_interval, nuni_interval
 
 if __name__ == '__main__':
-    # uni_interval, nuni_interval = analysis()
-    # plotResults(uni_interval, nuni_interval)
-    print 1.0/(math.log(200,2)+1)
+    uni_interval, nuni_interval = analysis()
+    plotResults(uni_interval, nuni_interval)
+    # print 1.0/(math.log(200,2)+1)
