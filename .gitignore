@@ -13,3 +13,6 @@ basic_fm
 *.in
 *.out
 *.zip
+a.o
+
+
