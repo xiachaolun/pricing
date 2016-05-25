@@ -30,7 +30,7 @@ def plotResults(uni_interval, nuni_interval):
 
 def analysis():
     res = []
-    with open('op.txt') as f:
+    with open('../results/op.txt') as f:
         for line in f.readlines():
             res.append([int(x) for x in line.strip().split()])
 

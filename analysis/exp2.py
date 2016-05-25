@@ -20,7 +20,7 @@ def plotResults(index):
     fig, ax = plt.subplots()
     plt.plot(x, idx)
 
-    # ax.fill_between(x, 0, idx, facecolor='blue')
+    ax.fill_between(x, 0, idx, facecolor='blue')
     plt.xlim([min_x, 1])
     # rects1 = ax.bar(ind, uni_interval, width, color='r')
     #
@@ -41,7 +41,7 @@ def plotResults(index):
 
 def analysis():
     res = []
-    with open('exp2_new.txt') as f:
+    with open('../results/exp2.txt') as f:
         for line in f.readlines():
             res.append([int(x) for x in line.strip().split()])
 
