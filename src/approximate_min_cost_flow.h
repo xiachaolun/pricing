@@ -119,6 +119,7 @@ struct ApproximateAlgorithm {
     
     int computeRevenue() {
 //        int r1 = _computeRevenueWithLeastPrice();
+        int r1 = 0;
         int r2 = _computeRevenueWithLeastLabels();
         int r3 = 0;
         for (int i = 0; i < 10; i++) {
