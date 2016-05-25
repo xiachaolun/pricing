@@ -14,6 +14,4 @@ basic_fm
 *.out
 *.zip
 a.o
-bin/
-
-
+bin/*.*
