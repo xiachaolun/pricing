@@ -83,6 +83,6 @@ int main(int argc, char* argv[]) {
     int L_user = atoi(argv[4]);
     cout << "Buyers: " << N << " Users: " << M << " L: " << L << " L per user: " << L_user << " Max Valution:" << MAX_VALUATION << endl;
 
-    runEvaluation(N,M,L,L_user);
-//    runExperiment22(N,M,L,L_user);
+//    runEvaluation(N,M,L,L_user);
+    runExperiment22(N,M,L,L_user);
 }
