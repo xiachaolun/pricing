@@ -159,7 +159,7 @@ struct ProblemSolver {
         int round = 0;
         if (include_detail) cout << round << ":" << revenue;
         
-        while (changed ) {
+        while (changed) {
             round++;
             changed = false;
             vector<pair<double, double> > bounds(0);
